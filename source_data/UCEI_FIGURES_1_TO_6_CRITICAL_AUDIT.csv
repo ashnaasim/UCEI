@@ -1,0 +1,20 @@
+figure,check,observed,pass
+Figure1,"Reference cohort has 10,495 rows",10495,TRUE
+Figure1,"Bootstrap long table has 1,200 rows",1200,TRUE
+Figure1,Bootstrap summary has 6 components,6,TRUE
+Figure1,Construction LOCO has 32 cancers,32,TRUE
+Figure2,"Clinical benchmark cohort has 3,243 rows",3243,TRUE
+Figure2,B2_REPORT yielded result tables,8,TRUE
+Figure3,B9 combined benchmark available,TRUE,TRUE
+Figure3,B9C nested-validation summary available,TRUE,TRUE
+Figure4,B10 cross-histology results available,TRUE,TRUE
+Figure4,B12B strict-training results available,TRUE,TRUE
+Figure4,B12C ablation results available,TRUE,TRUE
+Figure4,B12D censoring-aware results available,TRUE,TRUE
+Figure5,B8K state cohort available,TRUE,TRUE
+Figure5,B8K likelihood-ratio results available,TRUE,TRUE
+Figure6,08E formal latent-manifest files available,TRUE,TRUE
+Figure6,08G anti-circularity files available,TRUE,TRUE
+Figure6,10B DepMap report available,TRUE,TRUE
+Figure6,"22A gene map has 7,408 genes",7408,TRUE
+Figure6,22B final pathway bundle available,TRUE,TRUE
