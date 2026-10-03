@@ -1,0 +1,7 @@
+feature_code,feature_label,PC1_loading,raw_feature
+jsd_neutral_v2_resid_z,Jensen–Shannon divergence from neutral,-0.412647827541192,jsd_neutral
+ent_state_size_v2_resid_z,State-size entropy,0.464165512883787,ent_state_size
+ent_chr_sd_v2_resid_z,Chromosome-SD architecture,0.410365020615005,ent_chr_sd
+ent_chr_mean_v2_resid_z,Chromosome-mean architecture,0.404776573447477,ent_chr_mean
+ent_ampclass_v2_resid_z,Amplification-class entropy,0.457119404690806,ent_ampclass
+ent_transition_v2_resid_z,Transition entropy,0.270315505241108,ent_transition
