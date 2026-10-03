@@ -18,8 +18,10 @@ req <- c("ModelID","gene","expression","local_CN","reduced_UCEI","global_burden"
 miss <- setdiff(req,names(D))
 if(length(miss)) stop("Missing columns: ",paste(miss,collapse=", "))
 
+fit_vars <- setdiff(req,"gene")
+
 fit_one <- function(z){
-    z <- z[complete.cases(z[,..req])]
+    z <- z[complete.cases(z[,..fit_vars])]
     if(nrow(z)<80L) return(NULL)
     f <- try(lm(expression ~ local_CN + reduced_UCEI + global_burden + factor(lineage),data=z),silent=TRUE)
     if(inherits(f,"try-error")) return(NULL)
