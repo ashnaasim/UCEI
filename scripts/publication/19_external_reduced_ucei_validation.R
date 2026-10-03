@@ -198,7 +198,6 @@ analyze_one <- function(study_id) {
     SR <- data.table()
     if(all(c("survival_time","survival_event")%in%names(scores))) {
         d <- scores[is.finite(reduced_UCEI_proxy_z)&is.finite(survival_time)&survival_time>0&survival_event%in%c(0,1)]
-        if(nrow(d)>=50L && sum(d$survival_event)==1L) {}
         if(nrow(d)>=50L && sum(d$survival_event)>=10L) {
             fit <- coxph(Surv(survival_time,survival_event)~reduced_UCEI_proxy_z,data=d,ties="efron")
             sm <- summary(fit)
