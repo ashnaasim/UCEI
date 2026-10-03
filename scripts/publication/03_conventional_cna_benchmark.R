@@ -146,11 +146,21 @@ F <- D[
     .(cancer,burden_total=as.numeric(burden_total),UCEI=UCEI_for_B2)
 ]
 
+B2_breaks <- unique(
+    as.numeric(
+        quantile(
+            F$burden_total,
+            probs=seq(0,1,0.1),
+            na.rm=TRUE,
+            names=FALSE
+        )
+    )
+)
+if (length(B2_breaks)<3L) stop("Insufficient unique burden quantile breaks.")
 F[, burden_decile:=cut(
     burden_total,
-    breaks=quantile(burden_total,probs=seq(0,1,0.1),na.rm=TRUE),
-    include.lowest=TRUE,
-    duplicates="drop"
+    breaks=B2_breaks,
+    include.lowest=TRUE
 )]
 
 B2_FIXED_BURDEN <- F[
