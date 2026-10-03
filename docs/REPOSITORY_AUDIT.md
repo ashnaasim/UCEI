@@ -36,17 +36,26 @@ Historical source-data manifests retain workstation paths and internal object na
 
 ## Audit status
 
-**PASS WITH DOCUMENTED PROVENANCE CAVEATS.** No remaining blocker was identified in the intended publication-facing paths. The repository should remain private until the owner performs the final visual file-tree/privacy check below.
+**HOLD FOR ONE PRIVACY FIX.** The repository file tree itself is clean and no accidental personal documents or raw private files were found. However, the Git commit history currently records a non-noreply personal author email in the commit metadata. Because that metadata becomes inspectable when a repository is public, repository visibility should remain private until the commit history is rewritten with a GitHub noreply email (or the owner explicitly accepts that exposure).
 
 ## Public-release gate
 
 The repository is suitable for public release once the owner confirms that no additional private files, credentials, unpublished third-party raw data, or author-sensitive material have been added outside the audited paths.
 
-Recommended final manual checks immediately before changing repository visibility:
+Final privacy/file-tree check completed on 2026-10-04:
 
-1. Open the GitHub file tree and confirm no accidental uploads outside the documented directories.
-2. Confirm that `source_data/` contains only intended processed/derived source data.
+- Root contains only the intended release structures: `.github/`, `docs/`, `parameters/`, `reproducibility/`, `results/`, `scoring/`, `scripts/`, and `source_data/`, plus repository control files.
+- No manuscript DOCX/PDF files, EndNote libraries, CVs, personal images, local caches, environment files, API credentials, passwords, tokens, or unrelated project files were found in the tracked tree.
+- Historical `E:/cnv/...` paths remain only in provenance/source-manifest material and do not contain a Windows username or credential.
+- TCGA identifiers in scoring/reference/source-data files are public de-identified study identifiers, not personal names.
+- **Privacy blocker:** commit metadata uses a personal email rather than a GitHub noreply address.
+
+Recommended final checks immediately before changing repository visibility:
+
+1. Rewrite commit author/committer email metadata to a GitHub noreply address and force-push the rewritten `main` history.
+2. Re-run the automated reproducibility workflow after that history rewrite.
 3. Confirm that manuscript wording matches the repository terminology and Data Availability statement.
-4. Create a tagged release or archive DOI after the final submission commit, if desired.
+4. Only then change repository visibility to Public.
+5. Create a tagged release or archive DOI after the final submission commit, if desired.
 
 Do not change repository visibility until those owner-level checks are complete.
