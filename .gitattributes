@@ -1,0 +1,16 @@
+# Preserve checksum-covered historical scoring files byte-for-byte.
+scoring/README.txt -text
+scoring/data_dictionary.csv -text
+scoring/score_ucei_v2.R -text
+scoring/sessionInfo.txt -text
+scoring/standalone_reproduction_test.csv -text
+scoring/test_expected_output.csv -text
+scoring/test_input_20_samples.csv -text
+scoring/UCEI_v2_PCA_loadings.csv -text
+scoring/UCEI_v2_residualization_parameters.csv -text
+scoring/UCEI_v2_score_parameters.csv -text
+scoring/MD5SUMS.txt -text
+
+# Binary R objects.
+*.rds binary
+*.RData binary
