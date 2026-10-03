@@ -131,20 +131,23 @@ B9_LRT <- rbindlist(list(
 ## B9C: exact historical outer folds supplied externally
 ############################################################
 
-fold_required <- c("patient_id","repeat","fold")
+if ("repeat" %in% names(FOLDS) && !"rep_id" %in% names(FOLDS)) {
+    setnames(FOLDS,"repeat","rep_id")
+}
+fold_required <- c("patient_id","rep_id","fold")
 fm <- setdiff(fold_required,names(FOLDS))
-if (length(fm)) stop("Fold file must contain patient_id, repeat, fold.")
+if (length(fm)) stop("Fold file must contain patient_id, repeat/rep_id, and fold.")
 
 FOLDS[, patient_id:=as.character(patient_id)]
 D[, patient_id:=as.character(patient_id)]
 
-if (anyDuplicated(FOLDS[,.(patient_id,repeat)])) {
+if (anyDuplicated(FOLDS[,.(patient_id,rep_id)])) {
     stop("Fold assignment table has duplicate patient_id/repeat pairs.")
 }
 
-repeats <- sort(unique(FOLDS$repeat))
+repeats <- sort(unique(FOLDS$rep_id))
 if (length(repeats)!=10L) warning("Expected 10 validation repeats; found ",length(repeats),".")
-if (any(vapply(split(FOLDS$fold,FOLDS$repeat),function(x) uniqueN(x),integer(1))!=5L)) {
+if (any(vapply(split(FOLDS$fold,FOLDS$rep_id),function(x) uniqueN(x),integer(1))!=5L)) {
     warning("At least one repeat does not contain exactly five folds.")
 }
 
@@ -254,7 +257,7 @@ SEL_RES <- list()
 counter <- 0L
 
 for (rr in repeats) {
-    fr <- FOLDS[repeat==rr]
+    fr <- FOLDS[rep_id==rr]
     X <- merge(D,fr[,.(patient_id,fold)],by="patient_id",all=FALSE)
 
     for (ff in sort(unique(X$fold))) {
@@ -265,12 +268,12 @@ for (rr in repeats) {
         pb <- baseline_predict(tr,te)
 
         FOLD_RES[[length(FOLD_RES)+1L]] <- data.table(
-            repeat=rr,fold=ff,model="Clinical_baseline",
+            rep_id=rr,fold=ff,model="Clinical_baseline",
             n=nrow(te),events=sum(te$pfi_event),
             C=cindex(te$pfi_time,te$pfi_event,pb)
         )
         PRED_RES[[length(PRED_RES)+1L]] <- data.table(
-            patient_id=te$patient_id,repeat=rr,fold=ff,
+            patient_id=te$patient_id,rep_id=rr,fold=ff,
             model="Clinical_baseline",pfi_time=te$pfi_time,
             pfi_event=te$pfi_event,lp=pb
         )
@@ -283,12 +286,12 @@ for (rr in repeats) {
             )
 
             FOLD_RES[[length(FOLD_RES)+1L]] <- data.table(
-                repeat=rr,fold=ff,model=mn,
+                rep_id=rr,fold=ff,model=mn,
                 n=nrow(te),events=sum(te$pfi_event),
                 C=cindex(te$pfi_time,te$pfi_event,fit$pred)
             )
             PRED_RES[[length(PRED_RES)+1L]] <- data.table(
-                patient_id=te$patient_id,repeat=rr,fold=ff,
+                patient_id=te$patient_id,rep_id=rr,fold=ff,
                 model=mn,pfi_time=te$pfi_time,
                 pfi_event=te$pfi_event,lp=fit$pred
             )
@@ -299,7 +302,7 @@ for (rr in repeats) {
                     c(sota,"UCEI_B9C")
                 )
                 SEL_RES[[length(SEL_RES)+1L]] <- data.table(
-                    repeat=rr,fold=ff,
+                    rep_id=rr,fold=ff,
                     predictor=c(sota,"UCEI"),
                     selected=as.integer(c(sota,"UCEI_B9C") %in% candidate_selected)
                 )
@@ -315,7 +318,7 @@ B9C_selection_results <- rbindlist(SEL_RES)
 B9C_repeat_results <- B9C_predictions[
     ,
     .(C=cindex(pfi_time,pfi_event,lp)),
-    by=.(repeat,model)
+    by=.(rep_id,model)
 ]
 
 B9C_summary <- B9C_repeat_results[
@@ -324,20 +327,20 @@ B9C_summary <- B9C_repeat_results[
     by=model
 ][order(-mean_C)]
 
-W <- dcast(B9C_repeat_results,repeat~model,value.var="C")
+W <- dcast(B9C_repeat_results,rep_id~model,value.var="C")
 
 B9C_delta <- rbindlist(list(
-    W[,.(repeat,comparison="combo vs AllSOTA39",
+    W[,.(rep_id,comparison="combo vs AllSOTA39",
          delta_C=AllSOTA39_plus_UCEI-AllSOTA39)],
-    W[,.(repeat,comparison="combo vs UCEI",
+    W[,.(rep_id,comparison="combo vs UCEI",
          delta_C=AllSOTA39_plus_UCEI-UCEI)],
-    W[,.(repeat,comparison="UCEI vs AllSOTA39",
+    W[,.(rep_id,comparison="UCEI vs AllSOTA39",
          delta_C=UCEI-AllSOTA39)],
-    W[,.(repeat,comparison="UCEI vs cDITHER",
+    W[,.(rep_id,comparison="UCEI vs cDITHER",
          delta_C=UCEI-cDITHER)],
-    W[,.(repeat,comparison="UCEI vs Drews17",
+    W[,.(rep_id,comparison="UCEI vs Drews17",
          delta_C=UCEI-Drews17)],
-    W[,.(repeat,comparison="UCEI vs Steele21",
+    W[,.(rep_id,comparison="UCEI vs Steele21",
          delta_C=UCEI-Steele21)]
 ))
 
