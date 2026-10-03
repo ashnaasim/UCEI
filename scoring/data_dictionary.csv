@@ -1,0 +1,10 @@
+field,role,description
+cancer,input,Lower-case or case-insensitive TCGA cancer label supported by the frozen reference.
+burden_total,input,Genome-wide copy-number burden used by the frozen cancer-specific residualization model.
+jsd_neutral,input,Jensen-Shannon divergence from the neutral copy-number state distribution.
+ent_state_size,input,Entropy of segment-size architecture.
+ent_chr_sd,input,Across-chromosome SD of altered-fraction architecture.
+ent_chr_mean,input,Across-chromosome mean altered fraction.
+ent_ampclass,input,Copy-number amplitude-class entropy.
+ent_transition,input,Adjacent copy-number state-transition entropy.
+UCEI_v2_z,output,Frozen standardized UCEI-v2 score.
