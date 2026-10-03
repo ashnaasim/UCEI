@@ -22,6 +22,7 @@ This audit was performed before public release of the UCEI reproducibility repos
 - Reader-facing scoring wrapper `scoring/score_ucei.R` was added without changing the checksum-covered historical scorer.
 - `.gitattributes` now prevents line-ending conversion of checksum-covered historical scoring files.
 - A portable `01_verify_ucei_scoring.R` script now checks both numerical reproduction and the historical MD5 manifest.
+- GitHub Actions reproducibility workflow completed successfully on R 4.5.2: standalone scoring/checksum verification PASS and Figure 1–6 source-data verification PASS.
 - During code audit, grouped `data.table::.SD` scoping errors in the reconstructed DepMap and CN-aware transcription scripts were identified and corrected before release.
 - Reader-facing documentation now uses **UCEI** while preserving internal `v2`/`frozen` labels only where required for traceability.
 
