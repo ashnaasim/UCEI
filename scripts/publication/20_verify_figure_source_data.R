@@ -5,8 +5,6 @@
 ## No analyses are rerun or refitted.
 ############################################################
 
-suppressPackageStartupMessages(library(data.table))
-
 args <- commandArgs(trailingOnly=TRUE)
 source_dir <- if(length(args)>=1L) args[[1L]] else "source_data"
 
@@ -19,8 +17,8 @@ required <- c(manifest_file,audit_file,bundle_file,index_file)
 missing <- required[!file.exists(required)]
 if(length(missing)) stop("Missing source-data file(s): ",paste(missing,collapse=", "))
 
-MANIFEST <- fread(manifest_file)
-AUDIT <- fread(audit_file)
+MANIFEST <- utils::read.csv(manifest_file,stringsAsFactors=FALSE,check.names=FALSE)
+AUDIT <- utils::read.csv(audit_file,stringsAsFactors=FALSE,check.names=FALSE)
 FIGDATA <- readRDS(bundle_file)
 INDEX <- readRDS(index_file)
 
@@ -37,9 +35,10 @@ if(!all(expected_figures %in% names(FIGDATA))) {
     stop("Figure-data bundle is missing one or more Figure1-Figure6 entries.")
 }
 
-COUNTS <- data.table(
+COUNTS <- data.frame(
     figure=expected_figures,
-    n_items=vapply(FIGDATA[expected_figures],length,integer(1))
+    n_items=vapply(FIGDATA[expected_figures],length,integer(1)),
+    stringsAsFactors=FALSE
 )
 
 cat("\nUCEI figure source-data verification\n")
