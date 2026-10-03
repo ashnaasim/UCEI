@@ -1,6 +1,6 @@
 # Public datasets and stable identifiers
 
-This file records public resources used in the UCEI manuscript. Raw third-party data should be obtained from the originating repositories and are not redistributed in this repository.
+This file records public resources used in the UCEI manuscript. Raw third-party data should be obtained from the originating repositories and are not redistributed here.
 
 ## Primary pan-cancer data
 
@@ -26,8 +26,12 @@ External reduced-feature UCEI analyses used cBioPortal-format study packs with t
 - `prad_su2c_2019`
 - `prostate_msk_2024`
 
-These external analyses constitute reduced-feature/proxy support and are not presented as exact reconstruction of the complete six-feature UCEI in every external cohort.
+These analyses are reduced-feature/proxy support and are not presented as exact six-feature UCEI reconstruction.
 
 ## Proteomics
 
-Quantitative CCLE proteomic data were obtained from the publicly available mass-spectrometry resource described by Nusinow et al. The final repository will document the exact downloaded file used in the manuscript analysis.
+Quantitative CCLE proteomic data were taken from the Nusinow et al. mass-spectrometry resource, **“Quantitative Proteomics of the Cancer Cell Line Encyclopedia”** (Cell, 2020; PMID **31978347**; DOI **10.1016/j.cell.2019.12.023**). The retained analysis used the normalized quantitative proteomics file `protein_quant_current_normalized.csv.gz`. The publication workflow aligned this resource to the functional-genomic analysis and used 7,408 genes as the measurable proteomic background.
+
+## Redistribution
+
+Repository files contain derived parameters, processed analysis outputs, and figure source data. Users should retrieve raw third-party datasets directly from the original repositories and comply with their respective terms of use.
