@@ -36,11 +36,15 @@ Historical source-data manifests retain workstation paths and internal object na
 
 ## Audit status
 
-**HOLD FOR ONE PRIVACY FIX.** The repository file tree itself is clean and no accidental personal documents or raw private files were found. However, the Git commit history currently records a non-noreply personal author email in the commit metadata. Because that metadata becomes inspectable when a repository is public, repository visibility should remain private until the commit history is rewritten with a GitHub noreply email (or the owner explicitly accepts that exposure).
+**PASS — CLEARED FOR PUBLIC RELEASE (2026-10-04).**
+
+The previously identified commit-metadata privacy blocker has been resolved. All rewritten commits on `main` use the GitHub noreply author/committer identity `aa246 <204020622+ashnaasim@users.noreply.github.com>`. The rewritten history was force-pushed to remote `main`, and the post-rewrite GitHub Actions reproducibility workflow completed successfully.
+
+The repository file tree remains clean, with no accidental personal documents, credentials, unpublished third-party raw data, or unrelated private files identified in the audited release state.
 
 ## Public-release gate
 
-The repository is suitable for public release once the owner confirms that no additional private files, credentials, unpublished third-party raw data, or author-sensitive material have been added outside the audited paths.
+The repository has passed the final pre-publication privacy, file-tree, and reproducibility checks.
 
 Final privacy/file-tree check completed on 2026-10-04:
 
@@ -48,14 +52,17 @@ Final privacy/file-tree check completed on 2026-10-04:
 - No manuscript DOCX/PDF files, EndNote libraries, CVs, personal images, local caches, environment files, API credentials, passwords, tokens, or unrelated project files were found in the tracked tree.
 - Historical `E:/cnv/...` paths remain only in provenance/source-manifest material and do not contain a Windows username or credential.
 - TCGA identifiers in scoring/reference/source-data files are public de-identified study identifiers, not personal names.
-- **Privacy blocker:** commit metadata uses a personal email rather than a GitHub noreply address.
+- Git commit author and committer metadata were rewritten to use the GitHub noreply identity `aa246 <204020622+ashnaasim@users.noreply.github.com>`.
+- The rewritten `main` history was force-pushed successfully.
+- The post-rewrite GitHub Actions reproducibility workflow completed successfully.
 
-Recommended final checks immediately before changing repository visibility:
+Recommended final release steps:
 
-1. Rewrite commit author/committer email metadata to a GitHub noreply address and force-push the rewritten `main` history.
-2. Re-run the automated reproducibility workflow after that history rewrite.
-3. Confirm that manuscript wording matches the repository terminology and Data Availability statement.
-4. Only then change repository visibility to Public.
-5. Create a tagged release or archive DOI after the final submission commit, if desired.
+1. Confirm that manuscript terminology and the Data Availability statement match the repository.
+2. Change repository visibility to Public.
+3. Verify anonymous public access to the repository and key reproducibility files.
+4. Create a tagged release corresponding to the submitted manuscript version.
+5. Archive that release in a persistent repository such as Zenodo and record the DOI.
+6. Cite the public GitHub repository and archival DOI in the manuscript and submission system.
 
-Do not change repository visibility until those owner-level checks are complete.
+**Release status: CLEARED FOR PUBLIC RELEASE.**
